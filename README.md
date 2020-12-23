@@ -1,6 +1,6 @@
-# Foobar
+# Job Application Tracker
 
-Foobar is a Python library for dealing with word pluralization.
+Job Application Tracker is a Python program to help students by organizing the (typically) large volume of applications required for internship or recent grad job roles.
 
 ## Installation
 
