@@ -2,9 +2,11 @@
 
 """application.py: Represents one application opportunity, and its basic information."""
 
+import datetime
+
 
 class Application:
-    """Creates an opportunity object representing an application/opportunity with an employer."""
+    """Creates an application object representing a single job application to an employer."""
     count = 0
     stages = {
         1: 'Applied',
@@ -16,25 +18,32 @@ class Application:
         7: 'Offer'
     }
 
-    def __init__(self, application_date, company, job_description):
+    def __init__(self, year, month, day, job_title, job_description):
         """Initializes an Opportunity class"""
-        self._application_date = application_date
-        self._company = company
+        self._date = datetime.datetime(year, month, day)
+        # self._company = obj_company
+        self._job = job_title
         self._job_description = job_description
         self._stage = Application.stages[1]
         Application.count += 1
 
-    def set_application_date(self, application_date):
-        self._application_date = application_date
+    def __repr__(self):
+        pass
+
+    def __str__(self):
+        return f'{self._date.strftime("%x")} -- {self._job}  {self._job_description}'
+
+    def set_application_date(self, year, month, day):
+        self._date = datetime.datetime(year, month, day)
 
     def get_application_date(self):
-        return self._application_date
+        return self._date
 
-    def set_company(self, company):
-        self._company = company
-
-    def get_company(self):
-        return self._company
+    # def set_company(self, company):
+    #     self._company = company
+    #
+    # def get_company(self):
+    #     return self._company
 
     def set_stage(self, stage):
         self._stage = stage
@@ -43,5 +52,11 @@ class Application:
         return self._stage
 
 
-def display_total_applications():
+def display_total():
     print(f'Total Applications: {Application.count}')
+
+
+if __name__ == '__main__':
+    app = Application(2020, 12, 20, 'SWE', 'Entry level -- required: 15+ yrs C++ and PhD in Computer Science')
+    print(app)
+    display_total()
