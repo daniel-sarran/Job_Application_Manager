@@ -51,9 +51,9 @@ class Company:
         return self._applications
 
 # if __name__ == '__main__':
-# company = 'SalesForce'
-# data_storage.companies[company] = Company(company)
-# print(data_storage.companies)
-# company = 'Apple'
-# data_storage.companies[company] = Company(company)
-# print(data_storage.companies[company])
+    # company = 'SalesForce'
+    # data_storage.companies[company] = Company(company)
+    # print(data_storage.companies)
+    # company = 'Apple'
+    # data_storage.companies[company] = Company(company)
+    # print(data_storage.companies[company])
