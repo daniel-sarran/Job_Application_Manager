@@ -2,8 +2,6 @@
 
 """company.py: Creates a company profile."""
 from sortedcontainers import SortedList
-import data_storage
-from application import Application
 
 
 class Company:
@@ -26,42 +24,36 @@ class Company:
         return f'Company:\n"{self._name}"\n\nDescription:\n' + "\n".join(lines)
 
     def set_name(self, name):
-        """Sets user first, last, (optional) middle name."""
+        """Sets company name."""
         self._name = name
 
     def get_name(self):
-        """Returns first, last, middle name as a tuple"""
+        """Returns company name"""
         return self._name
 
     def set_industry(self, industry):
-        """Sets user address."""
+        """Sets user industry."""
         self._description = industry
 
     def get_industry(self, industry):
-        """Returns a company's industry."""
+        """Returns company industry."""
         return self._description
 
     def set_description(self, description):
-        """Change Company description"""
+        """Change company description."""
         self._description = description
 
     def get_description(self):
-        """Returns Company description."""
+        """Returns company description."""
         return self._description
-
-    # def new_application(self, yr, mo, day, job, desc):
-    #     app = Application(yr, mo, day, job, desc)
-    #     data_storage.applications[self._name] = self
-    #     self._applications = data_storage.applications[self._name]
 
     def get_applications(self):
         return self._applications
 
-
 # if __name__ == '__main__':
-    # company = 'SalesForce'
-    # data_storage.companies[company] = Company(company)
-    # print(data_storage.companies)
-    # company = 'Apple'
-    # data_storage.companies[company] = Company(company)
-    # print(data_storage.companies[company])
+# company = 'SalesForce'
+# data_storage.companies[company] = Company(company)
+# print(data_storage.companies)
+# company = 'Apple'
+# data_storage.companies[company] = Company(company)
+# print(data_storage.companies[company])
