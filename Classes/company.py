@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
 """company.py: Creates a company profile."""
+from sortedcontainers import SortedList
+import data_storage
+from application import Application
 
 
 class Company:
@@ -11,12 +14,16 @@ class Company:
         self._name = name
         self._description = description
         self._priority = priority
+        self._applications = SortedList([])
 
     def __repr__(self):
-        return f'Company object: "{self._name}'
+        return f'<Company object: {self._name}>'
 
     def __str__(self):
-        return f'{self._name}'
+        lines = []
+        for i in range(0, len(self._description), 60):
+            lines.append(self._description[i:i + 60])
+        return f'Company:\n"{self._name}"\n\nDescription:\n' + "\n".join(lines)
 
     def set_name(self, name):
         """Sets user first, last, (optional) middle name."""
@@ -42,3 +49,19 @@ class Company:
         """Returns Company description."""
         return self._description
 
+    # def new_application(self, yr, mo, day, job, desc):
+    #     app = Application(yr, mo, day, job, desc)
+    #     data_storage.applications[self._name] = self
+    #     self._applications = data_storage.applications[self._name]
+
+    def get_applications(self):
+        return self._applications
+
+
+# if __name__ == '__main__':
+    # company = 'SalesForce'
+    # data_storage.companies[company] = Company(company)
+    # print(data_storage.companies)
+    # company = 'Apple'
+    # data_storage.companies[company] = Company(company)
+    # print(data_storage.companies[company])

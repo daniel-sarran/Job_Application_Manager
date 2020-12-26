@@ -3,13 +3,11 @@
 """main.py: Main program loop."""
 
 import UI
-import dashboard
-import company
-import application
-import communication
+import data_storage
 
+def new_company(co_name, co_object):
+    data_storage.companies[co_name] = co_object
 
 if __name__ == '__main__':
     UI.greeting()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
