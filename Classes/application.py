@@ -50,8 +50,11 @@ class Application:
     def get_stage(self):
         return self._stage
 
-    def add_comm(self):
+    def add_comm(self, comm):
+        self._communications.add(comm)
 
+    def remove_comm(self, comm):
+        self._communications.pop(comm)
 
 def display_total_applications():
     print(f'Total Applications: {Application.count}')
@@ -60,5 +63,4 @@ def display_total_applications():
 if __name__ == '__main__':
     app = Application('Apple', 2020, 12, 20, 'SWE', 'Entry level -- required: 15+ yrs C++ and PhD in Computer Science')
     print(app)
-
     display_total_applications()
