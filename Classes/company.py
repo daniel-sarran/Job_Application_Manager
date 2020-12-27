@@ -7,11 +7,10 @@ from sortedcontainers import SortedList
 class Company:
     """Creates a Company object representing the company receiving a job application."""
 
-    def __init__(self, name, description='', priority=''):
+    def __init__(self, name, description=''):
         """Initializes a Company object."""
         self._name = name
         self._description = description
-        self._priority = priority
         self._applications = SortedList([])
 
     def __repr__(self):

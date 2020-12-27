@@ -2,25 +2,14 @@
 
 """communication.py: Creates a single communication (email, call, etc)."""
 
-import datetime
+from Classes.date import Date
 
 
-class Communication:
+class Communication(Date):
     """Creates log of a single communication to/from a Company."""
 
     def __init__(self, yr_mo_day_tuple, interaction, notes, status):
-        """
-        //TODO: Docstring
-        :param yr_mo_day_tuple: 
-        :type yr_mo_day_tuple: 
-        :param interaction: "Call", "Email", or "Meeting"
-        :type interaction: 
-        :param notes: 
-        :type notes: 
-        :param status: "Done", "In Progress", "Cancelled", or "Failed"
-        :type status: 
-        """
-        self._date = datetime.datetime(*yr_mo_day_tuple)
+        super().__init__(*yr_mo_day_tuple)
         self._interaction = interaction
         self._notes = notes
         self._status = status
@@ -37,7 +26,9 @@ class Communication:
     def get_date(self):
         return self._date.strftime('%x')
 
-    # Set & Get
+    def _get_date(self):
+        return self._date
+
     def set_interaction(self, interaction):
         """Sets interaction to 'Call', 'Email', or 'Meeting'."""
         self._interaction = interaction
@@ -64,3 +55,6 @@ class Communication:
 if __name__ == '__main__':
     comm = Communication((2020, 12, 20), 0, 'You are invited to Online Assessment!', 0)
     print(comm)
+    comm2 = Communication((2020, 12, 21), 0, 'You are invited to Online Assessment!', 0)
+    print(comm2)
+    print(comm != comm2)
