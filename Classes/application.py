@@ -6,6 +6,7 @@ from sortedcontainers import SortedList
 from Classes.communication import Communication
 from Classes.date import Date
 
+# TODO: stage change should monitor date of stage change
 
 class Application(Date):
     """Creates an application object representing a single job application to an employer."""
@@ -31,10 +32,10 @@ class Application(Date):
         Application.count += 1
 
     def __repr__(self):
-        pass
+        return f'{self._company} - {self._job}:\n  Applied as of {self.get_date().strftime("%x")}'
 
     def __str__(self):
-        result = f'{self._date.strftime("%x")} -- {self._job}  {self._job_description}\n'
+        result = f'{self._date.strftime("%x")} -- {self._stage} | {self._job} @ {self._company}'
         for obj in self._communications:
             result += f'    {obj}\n'
         return result
@@ -44,7 +45,7 @@ class Application(Date):
 
     def set_stage(self, stage):
         if stage in self._stages:
-            self._stage = stage
+            self._stage = self._stages[stage]
         else:
             raise ValueError(f'Stages are: {self._stages}')
 

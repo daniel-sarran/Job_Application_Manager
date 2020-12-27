@@ -17,10 +17,7 @@ class Company:
         return f'<Company object: {self._name}>'
 
     def __str__(self):
-        lines = []
-        for i in range(0, len(self._description), 60):
-            lines.append(self._description[i:i + 60])
-        return f'Company:\n"{self._name}"\n\nDescription:\n' + "\n".join(lines)
+        return f'{self._name}'
 
     def set_name(self, name):
         """Sets company name."""

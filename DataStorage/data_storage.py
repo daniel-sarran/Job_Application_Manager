@@ -15,6 +15,12 @@ class MasterData:
         self._applications = SortedDict({})
         self._communications = SortedDict({})
 
+    def __repr__(self):
+        pass
+
+    def __str__(self):
+        return f''
+
     def add_co(self, obj_company):
         self._companies.setdefault(obj_company.get_name(), obj_company)
 
