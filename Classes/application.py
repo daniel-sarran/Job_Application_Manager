@@ -39,17 +39,14 @@ class Application(Date):
             result += f'    {obj}\n'
         return result
 
-    def set_date(self, year, month, day):
-        self._date = datetime.datetime(year, month, day)
-
-    def get_date(self):
-        return self._date.strftime('%x')
-
     def get_company(self):
         return self._company
 
     def set_stage(self, stage):
-        self._stage = stage
+        if stage in self._stages:
+            self._stage = stage
+        else:
+            raise ValueError(f'Stages are: {self._stages}')
 
     def get_stage(self):
         return self._stage
@@ -79,3 +76,4 @@ if __name__ == '__main__':
     comm2 = Communication((2020, 12, 25), 'Meeting', 'Passed OA, awaiting interview per recruiter', 'Done')
     app1.add_comm(comm2)
     print(app1)
+    app1.set_stage(0)

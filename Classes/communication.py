@@ -20,12 +20,6 @@ class Communication(Date):
     def __str__(self):
         return f'{self._date.strftime("%x")}  {self._interaction}  {self._status}  --  "{self._notes}"'
 
-    def set_date(self, yr_mo_day_tuple):
-        self._date = datetime.datetime(*yr_mo_day_tuple)
-
-    def get_date(self):
-        return self._date.strftime('%x')
-
     def _get_date(self):
         return self._date
 
@@ -57,4 +51,4 @@ if __name__ == '__main__':
     print(comm)
     comm2 = Communication((2020, 12, 21), 0, 'You are invited to Online Assessment!', 0)
     print(comm2)
-    print(comm != comm2)
+    print(comm < comm2)

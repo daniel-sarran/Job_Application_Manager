@@ -16,7 +16,7 @@ class MasterData:
         self._communications = SortedDict({})
 
     def add_co(self, obj_company):
-        self._companies.add(obj_company.get_name(), obj_company)
+        self._companies.setdefault(obj_company.get_name(), obj_company)
 
     def remove_co(self, co):
         self._companies.pop(co)
@@ -25,7 +25,8 @@ class MasterData:
         return self._companies.peekitem(index)
 
     def add_app(self, obj_application):
-        self._applications.add(obj_application.get_date(), obj_application)
+        # TODO: as it stands now, can only add one application per date
+        self._applications.setdefault(obj_application.get_date(), obj_application)
 
     def remove_app(self, date):
         self._applications.pop(date)
@@ -33,8 +34,8 @@ class MasterData:
     def get_application_by_index(self, index):
         return self._applications.peekitem(index)
 
-    def add_comm(self, date, obj):
-        self._communications[date] = obj
+    def add_comm(self, obj_communication):
+        self._communications.setdefault(obj_communication.get_date(), obj_communication)
 
     def remove_comm(self, date):
         self._communications.pop(date)

@@ -4,29 +4,26 @@
 
 # Sample dashboard - run to view in console - this whole script is playground at this point
 
-import DataStorage.data_storage as ds
-import Classes.company as co
-import Classes.application as app
+from DataStorage.data_storage import MasterData
+from Classes.company import Company
+from Classes.application import Application
+from Classes.communication import Communication
+
 
 if __name__ == '__main__':
-    data = ds.MasterData()
+    data = MasterData()
 
-    company1 = co.Company('Apple')
-    data.add_co(company1)
+    data.add_co(Company('Apple'))
+    data.add_co(Company('Facebook'))
+    data.add_co(Company('Google'))
 
-    company2 = co.Company('Facebook')
-    data.add_co(company2)
-
-    company3 = co.Company('Google')
-    data.add_co(company3)
-
-    application1 = app.Application(company1, 2020, 12, 20, 'SWE Intern')
+    application1 = Application((2020, 12, 1), company1, 'SWE Intern')
     data.add_app(application1)
 
-    application2 = app.Application(company2, 2020, 12, 21, 'Embedded Intern')
+    application2 = Application((2020, 12, 21), company2, 'Embedded Intern')
     data.add_app(application2)
 
-    application3 = app.Application(company3, 2020, 12, 22, 'Web Dev Intern')
+    application3 = Application((2020, 12, 22), company3, 'Web Dev Intern')
     data.add_app(application3)
 
     print(data.display_companies())
