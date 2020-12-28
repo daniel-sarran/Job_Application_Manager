@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""UI.py: Manages menus and user interaction."""
+"""user_interface.py: Manages menus and user interaction."""
 
 
 """

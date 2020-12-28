@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""main.py: Main program loop."""
+"""main.py: Main program loop, driver code."""
 
 # TODO: everything
 

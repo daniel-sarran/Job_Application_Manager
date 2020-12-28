@@ -3,6 +3,9 @@
 """company.py: Creates a company profile."""
 from sortedcontainers import SortedList
 
+# for debugging only:
+from DataStorage.data_storage import Data
+
 
 class Company:
     """Creates a Company object representing the company receiving a job application."""
@@ -46,10 +49,9 @@ class Company:
     def get_applications(self):
         return self._applications
 
-# if __name__ == '__main__':
-    # company = 'SalesForce'
-    # data_storage.companies[company] = Company(company)
-    # print(data_storage.companies)
-    # company = 'Apple'
-    # data_storage.companies[company] = Company(company)
-    # print(data_storage.companies[company])
+
+if __name__ == '__main__':
+    data = Data()
+    company = 'SalesForce'
+    data.add_co(Company(company, 'Really sweet CRMs, ticker CRM'))
+    data.display_companies()

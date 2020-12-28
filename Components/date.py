@@ -34,6 +34,9 @@ class Date:
     def get_date(self):
         return self._date
 
+    def get_clean_date(self):
+        return self._date.strftime('%x')
+
 
 if __name__ == '__main__':
     new_date = Date(2020, 12, 20)

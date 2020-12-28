@@ -2,7 +2,7 @@
 
 """communication.py: Creates a single communication (email, call, etc)."""
 
-from Classes.date import Date
+from Components.date import Date
 
 
 class Communication(Date):

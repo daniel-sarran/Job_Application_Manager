@@ -3,8 +3,8 @@
 """application.py: Represents one application opportunity, and its basic information."""
 
 from sortedcontainers import SortedList
-from Classes.communication import Communication
-from Classes.date import Date
+from Components.communication import Communication
+from Components.date import Date
 
 
 # TODO: stage change should monitor date of stage change
@@ -21,10 +21,10 @@ class Application(Date):
         self._job = job_title
         self._job_description = job_description
         self._stages = {
-            0: 'Applied',
-            1: 'Online Assessment',
-            2: 'Phone Screen',
-            3: 'Interview',
+            0: 'Applied - awaiting response',
+            1: 'Online Assessment - Scheduled',
+            2: 'Phone Screen - Scheduled',
+            3: 'Interview - Scheduled',
             4: 'Rejection',
             5: 'Offer'
         }
@@ -33,10 +33,22 @@ class Application(Date):
         Application.count += 1
 
     def __repr__(self):
-        return f'{self._company} - {self._job}:\n  Applied as of {self.get_date().strftime("%x")}'
+        # return f'{self._company} - {self._job}:\n  Applied as of {self.get_date().strftime("%x")}'
+        return f'{self.get_clean_date():<15s}' \
+               f' {self.get_job():<15s}     {str(self.get_company()):<15s}' \
+               f' {self.get_stage():<25s}'
 
     def __str__(self):
-        return f'{self._date.strftime("%x")} -- {self._stage} | {self._job} @ {self._company}'
+        # return f'{self._date.strftime("%x")} -- {self._stage} | {self._job} @ {self._company}'
+        return f'{self.get_clean_date():<15s}' \
+               f'{self.get_job():<15s}     {str(self.get_company()):<15s}' \
+               f'{self.get_stage():<25s}'
+
+    def get_job(self):
+        return self._job
+
+    def set_job(self, job):
+        self._job = job
 
     def get_company(self):
         return self._company

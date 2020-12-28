@@ -4,13 +4,13 @@
 from sortedcontainers import SortedDict, SortedList
 
 # These are for debugging if a company successfully gets added and removed
-from Classes.company import Company
-from Classes.application import Application
+# from Components.company import Company
+# from Components.application import Application
 
 
 # TODO: test adding/removing application and communication
 
-class MasterData:
+class Data:
     def __init__(self):
         self._companies = SortedDict({})
         self._applications = SortedList()
@@ -74,7 +74,7 @@ class MasterData:
 
 
 if __name__ == '__main__':
-    data = MasterData()
+    data = Data()
 
     company_obj = Company('Apple')
     data.add_co(company_obj)
