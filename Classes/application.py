@@ -6,6 +6,7 @@ from sortedcontainers import SortedList
 from Classes.communication import Communication
 from Classes.date import Date
 
+
 # TODO: stage change should monitor date of stage change
 
 class Application(Date):
@@ -35,10 +36,7 @@ class Application(Date):
         return f'{self._company} - {self._job}:\n  Applied as of {self.get_date().strftime("%x")}'
 
     def __str__(self):
-        result = f'{self._date.strftime("%x")} -- {self._stage} | {self._job} @ {self._company}'
-        for obj in self._communications:
-            result += f'    {obj}\n'
-        return result
+        return f'{self._date.strftime("%x")} -- {self._stage} | {self._job} @ {self._company}'
 
     def get_company(self):
         return self._company

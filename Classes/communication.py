@@ -18,7 +18,7 @@ class Communication(Date):
         return f'Communication object: "{self._date.strftime("%x"), self._interaction, self._notes}"'
 
     def __str__(self):
-        return f'{self._date.strftime("%x")}  {self._interaction}  {self._status}  --  "{self._notes}"'
+        return f'{self._date.strftime("%x")} | {self._status} | {self._interaction} -- "{self._notes}"'
 
     def _get_date(self):
         return self._date
