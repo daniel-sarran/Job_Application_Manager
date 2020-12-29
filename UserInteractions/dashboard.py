@@ -7,17 +7,14 @@
 from DataStorage.data_storage import Data
 from Components.company import Company
 from Components.application import Application
-from Components.communication import Communication
+from Components.activity import Activity
 
-# TODO: make a class that has functions for each menu
-# def view_activities(data, n):
-#     dashes = '*' * 40
-#     print('   ', dashes)
-#     for key, val in data.items():
-#         print('   ', '{:<10s}{:<30s}'.format(str(key), str(val)))
-PADDING = '    '
-INNER = '      '
 WIDTH = 90
+PADDING_SIZE = 4
+INNER_PADDING_SIZE = 6
+
+padding = ' ' * PADDING_SIZE
+inner_padding = ' ' * INNER_PADDING_SIZE
 
 
 def print_border(fill='*'):
@@ -29,77 +26,100 @@ def print_border(fill='*'):
 def greeting():
     print()
     print()
-    print(f'You\'ve already applied to {Application.count} jobs - nice work!'.center(WIDTH))
+    if Application.count > 1:
+        print(f'You\'ve already applied to {Application.count} jobs - nice work!'.center(WIDTH))
+    elif Application.count == 1:
+        print(f'You applied to your first job - keep it up!'.center(WIDTH))
+    else:
+        print(f'Let\'s get started!'.center(WIDTH))
     print()
     print()
 
 
 def recent_applications(data_obj):
-    print(PADDING + 'Most recent applications:')
-    print(INNER,
-          f'{"APPLIED ON":<15s}{"POSITION":<15s}     {"COMPANY":<15s}{"APPLICATION STAGE":<25s}')
-    # print(INNER + str(data.get_communications()[-1]))
     apps_list = data_obj.get_applications()
     ending_idx = -4
-
-    # TODO: make print output pretty
+    if not apps_list:
+        return
+    print(padding + 'Most recent applications:')
+    print(
+        inner_padding,
+        f'{"APPLIED":<15s}{"POSITION":<15s}     {"COMPANY":<15s}{"APPLICATION STAGE":<30s}'
+    )
     if len(apps_list) < abs(ending_idx):
         for app in reversed(apps_list):
-            print(INNER, app[1])
+            print(inner_padding, app[1])
     else:
         for idx in range(-1, ending_idx, -1):
-            print(INNER, apps_list[idx][1])
+            print(inner_padding, apps_list[idx][1])
     print()
 
 
 def upcoming_activities(data_obj):
-    print(PADDING + 'Upcoming activities:')
-    # print(INNER + str(data.get_communications()[-1]))
-    comm_list = data_obj.get_communications()
+    sched_list = [app[1] for app in data_obj.get_activities() if app[1].get_status() == 'Scheduled']
     ending_idx = -3
-
-    # TODO: make print output pretty
-    if len(comm_list) < abs(ending_idx):
-        for app in reversed(comm_list):
-            print(INNER, app)
+    if not sched_list:
+        return
+    print(padding + 'Upcoming activities:')
+    print(
+        inner_padding,
+        f'{"DATE":<15s}{"STATUS":<13s}{"TYPE":<10s}{"NOTE":<40s}'
+    )
+    if len(sched_list) < abs(ending_idx):
+        for app in reversed(sched_list):
+            print(inner_padding, app)
     else:
         for idx in range(-1, ending_idx, -1):
-            print(INNER, comm_list[idx])
+            print(inner_padding, sched_list[idx])
     print()
 
 
 def recent_completed_activities(data_obj):
-    print(PADDING + 'Recently completed activities:')
-    # print(INNER + str(data.get_communications()[-1]))
-    comm_list = data_obj.get_communications()
+    done_list = [app[1] for app in data_obj.get_activities() if app[1].get_status() == 'Done']
     ending_idx = -3
+    if not done_list:
+        return
+    print(padding + 'Recently completed activities:')
+    print(
+        inner_padding,
+        f'{"DATE":<15s}{"STATUS":<13s}{"TYPE":<10s}{"NOTE":<40s}'
+    )
 
-    # TODO: make print output pretty
-    if len(comm_list) < abs(ending_idx):
-        for app in reversed(comm_list):
-            print(INNER, app)
+    if len(done_list) < abs(ending_idx):
+        for app in reversed(done_list):
+            print(inner_padding, app)
     else:
         for idx in range(-1, ending_idx, -1):
-            print(INNER, comm_list[idx])
+            print(inner_padding, done_list[idx])
     print()
 
 
 def prompt_for_selection():
-    add_new = '(1) Add new...' + PADDING
-    find = '(2) Find...' + PADDING
-    view_all = '(3) View all...' + PADDING
+    print()
+    add_new = '(1) Add new...' + padding
+    find = '(2) View/Edit/Search...' + padding
+    view_all = '(3) List all...' + padding
 
-    print(PADDING + 'Select an option:')
-    print(INNER, add_new)
-    print(INNER, find)
-    print(INNER, view_all)
+    print(padding + 'Select an option:')
+    print(inner_padding, add_new)
+    if Application.count < 1:
+        return
+    print(inner_padding, find)
+    print(inner_padding, view_all)
 
+
+def display():
+    print_border()
+    greeting()
+    recent_applications(data)
+    upcoming_activities(data)
+    recent_completed_activities(data)
+    print_border()
+    prompt_for_selection()
+    print()
 
 if __name__ == '__main__':
     data = Data()
-
-    print(data.display_applications())
-    print(data.display_companies())
 
     company1 = Company('Apple')
     company2 = Company('Facebook')
@@ -119,23 +139,33 @@ if __name__ == '__main__':
     application3 = Application((2020, 12, 22), company3, 'Web Dev Intern')
     data.add_app(application3)
 
-    communication1 = Communication((2020, 12, 24), 'Call', 'Follow up w/ Recruiter - said 2 weeks', 'Upcoming')
-    application1.add_comm(communication1)
-    data.add_comm(communication1)
+    communication1 = Activity((2021, 1, 1), 0, 0, 'Send thank you letter to Yasmine & Habib')
+    application1.add_act(communication1)
+    data.add_act(communication1)
 
-    communication2 = Communication((2020, 12, 22), 'Email', 'Rejection', 'Done')
-    application2.add_comm(communication2)
-    data.add_comm(communication2)
+    communication2 = Activity((2020, 12, 22), 0, 1, 'Rejection')
+    application2.add_act(communication2)
+    data.add_act(communication2)
 
-    print_border()
-    greeting()
-    recent_applications(data)
-    upcoming_activities(data)
-    recent_completed_activities(data)
-    print_border()
-    prompt_for_selection()
-    print(PADDING, '{:<10s}{:<10s}{:<20s}{:<10s}'.format(application1.get_clean_date(), str(application1.get_company()),
-                                                         application1.get_job(), application1.get_stage()))
+    communication3 = Activity((2021, 1, 6), 0, 0, 'Follow up w/ Recruiter - said reach out in 2 weeks')
+    application1.add_act(communication3)
+    data.add_act(communication3)
+
+    communication4 = Activity((2020, 12, 26), 1, 1, 'Sent follow up email')
+    application3.add_act(communication4)
+    data.add_act(communication4)
+
+    communication5 = Activity((2020, 12, 26), 1, 1, 'Sent another email')
+    application3.add_act(communication5)
+    data.add_act(communication5)
+
+    communication6 = Activity((2020, 12, 27), 1, 1, 'Rcvd rejection email')
+    application3.add_act(communication6)
+    data.add_act(communication6)
+
+    display()
+
+
     # print(''.center(60, '*'))
     # print()
     # print(f'You\'ve already applied to {Application.count} jobs - nice work!'.center(60))

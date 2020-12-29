@@ -3,7 +3,7 @@
 """application.py: Represents one application opportunity, and its basic information."""
 
 from sortedcontainers import SortedList
-from Components.communication import Communication
+from Components.activity import Activity
 from Components.date import Date
 
 
@@ -29,17 +29,13 @@ class Application(Date):
             5: 'Offer'
         }
         self._stage = self._stages[0]
-        self._communications = SortedList()
+        self._activities = SortedList()
         Application.count += 1
 
     def __repr__(self):
-        # return f'{self._company} - {self._job}:\n  Applied as of {self.get_date().strftime("%x")}'
-        return f'{self.get_clean_date():<15s}' \
-               f' {self.get_job():<15s}     {str(self.get_company()):<15s}' \
-               f' {self.get_stage():<25s}'
+        return f'<Application object: {self._job} @ {self._company} on {self.get_clean_date()}>'
 
     def __str__(self):
-        # return f'{self._date.strftime("%x")} -- {self._stage} | {self._job} @ {self._company}'
         return f'{self.get_clean_date():<15s}' \
                f'{self.get_job():<15s}     {str(self.get_company()):<15s}' \
                f'{self.get_stage():<25s}'
@@ -62,11 +58,12 @@ class Application(Date):
     def get_stage(self):
         return self._stage
 
-    def add_comm(self, comm):
-        self._communications.add(comm)
+    def add_act(self, comm):
+        self._activities.add(comm)
 
-    def remove_comm(self, comm):
-        self._communications.pop(comm)
+    def remove_act(self, comm):
+        self._activities.pop(comm)
+        Application.count -= 1
 
 
 def display_total_applications():
@@ -82,9 +79,9 @@ if __name__ == '__main__':
                        'Entry level -- required: 15+ yrs C++ and PhD in Computer Science')
     print(app1)
     display_total_applications()
-    comm1 = Communication((2020, 12, 20), 'Email', 'Invited to Online Assessment', 'Done')
-    app1.add_comm(comm1)
-    comm2 = Communication((2020, 12, 25), 'Meeting', 'Passed OA, awaiting interview per recruiter', 'Done')
-    app1.add_comm(comm2)
+    comm1 = Activity((2020, 12, 20), 'Email', 'Invited to Online Assessment', 'Done')
+    app1.add_act(comm1)
+    comm2 = Activity((2020, 12, 25), 'Meeting', 'Passed OA, awaiting interview per recruiter', 'Done')
+    app1.add_act(comm2)
     print(app1)
     app1.set_stage(0)

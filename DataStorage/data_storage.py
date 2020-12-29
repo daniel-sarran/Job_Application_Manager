@@ -3,6 +3,7 @@
 """data_storage.py: Program data stored here."""
 from sortedcontainers import SortedDict, SortedList
 
+
 # These are for debugging if a company successfully gets added and removed
 # from Components.company import Company
 # from Components.application import Application
@@ -14,10 +15,11 @@ class Data:
     def __init__(self):
         self._companies = SortedDict({})
         self._applications = SortedList()
-        self._communications = SortedList()
+        self._activities = SortedList()
 
     def __repr__(self):
-        pass
+        return f'<Data object: companies: {len(self._companies)}, applications: {self._applications}, activities:' \
+               f'{self._activities}>'
 
     def __str__(self):
         return f''
@@ -25,15 +27,12 @@ class Data:
     def add_co(self, obj_company):
         self._companies.setdefault(obj_company.get_name(), obj_company)
 
-    def remove_co(self, co):
-        self._companies.pop(co)
+    def remove_co(self, co_obj):
+        # TODO: Need to remove associated applications, and their communications as well
+        self._companies.pop(co_obj)
 
-    def get_company_by_index(self, index):
-        return self._companies.peekitem(index)
-
-    def add_app(self, obj_application):
-        # TODO: as it stands now, can only add one application per date
-        self._applications.add([obj_application.get_date(), obj_application])
+    def add_app(self, app_obj):
+        self._applications.add([app_obj.get_date(), app_obj])
 
     def remove_app(self, date):
         self._applications.pop(date)
@@ -41,14 +40,14 @@ class Data:
     def get_applications(self):
         return self._applications
 
-    def add_comm(self, obj_communication):
-        self._communications.add([obj_communication.get_date(), obj_communication])
+    def add_act(self, obj_communication):
+        self._activities.add([obj_communication.get_date(), obj_communication])
 
-    def remove_comm(self, date):
-        self._communications.pop(date)
+    def remove_act(self, date):
+        self._activities.pop(date)
 
-    def get_communications(self):
-        return self._communications
+    def get_activities(self):
+        return self._activities
 
     def save_data(self):
         # TODO: save state
@@ -70,7 +69,14 @@ class Data:
             for idx, app in enumerate(self._applications, start=1):
                 print(idx, app)
         else:
-            print('No companies added... yet!')
+            print('No applications logged... yet!')
+
+    def display_activities(self):
+        if len(self._activities):
+            for idx, app in enumerate(self._activities, start=1):
+                print(idx, app)
+        else:
+            print('No activities added... yet!')
 
 
 if __name__ == '__main__':
