@@ -251,7 +251,7 @@ class Menu:
                 self.view_help()
                 break
             else:
-                self.pad('Invalid selection, try again.')
+                self._pad('Invalid selection, try again.')
 
     def _prompt_company_name(self):
         self._two_pad('Enter the company name.')
@@ -268,6 +268,7 @@ class Menu:
         print()
         self._two_pad('(1) Submit')
         self._two_pad('(2) Cancel')
+
 
 if __name__ == '__main__':
     data1 = Data()
@@ -321,4 +322,3 @@ if __name__ == '__main__':
 
     run = Menu(data1)
     run.main_menu()
-
