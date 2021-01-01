@@ -4,7 +4,7 @@ Job Application Manager is a Python program aimed at helping students stay organ
 
 It is not uncommon for a student to apply to hundreds of jobs in a job search. It is also not uncommon for an employer to take several weeks (sometimes months) to respond to a job application. 
 
-As the number of total job applications increase, the more difficult it is for a student to recall the precise details of each application and each communication with an employer.
+As the number of total job applications increase, and further time passes, the more difficult it is for a student to recall the precise details of each application and each communication with an employer.
 
 Job Application Tracker streamlines information management during a job search, acting as a "CRM" (of sorts) for students.
 
