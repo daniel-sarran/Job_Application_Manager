@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../job_application_tracker/.idea/job_application_tracker.iml" filepath="$PROJECT_DIR$/../job_application_tracker/.idea/job_application_tracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../job_application_manager/.idea/job_application_manager.iml" filepath="$PROJECT_DIR$/../job_application_manager/.idea/job_application_manager.iml" />
     </modules>
   </component>
 </project>
