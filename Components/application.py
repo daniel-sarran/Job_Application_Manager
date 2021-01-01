@@ -14,10 +14,10 @@ class Application(Date):
     # Keeps count of all applications created
     count = 0
 
-    def __init__(self, yr_mo_day_tuple, company, job_title, job_description=''):
+    def __init__(self, yr_mo_day_tuple, obj_company, job_title, job_description=''):
         """Initializes an Opportunity class"""
         super().__init__(*yr_mo_day_tuple)
-        self._company = company
+        self._obj_company = obj_company
         self._job = job_title
         self._job_description = job_description
         self._stages = {
@@ -27,18 +27,17 @@ class Application(Date):
             3: 'Interview - Scheduled',
             4: 'Rejection',
             5: 'Offer'
-        }
+            }
         self._stage = self._stages[0]
+        # TODO: change activities to save into DB
         self._activities = SortedList()
         Application.count += 1
 
     def __repr__(self):
-        return f'<Application object: {self._job} @ {self._company} on {self.get_clean_date()}>'
+        return f'<Application object: {self._job} @ {self._obj_company} on {self.get_clean_date()}>'
 
     def __str__(self):
-        return f'{self.get_clean_date():<15s}' \
-               f'{self.get_job():<15s}     {str(self.get_company()):<15s}' \
-               f'{self.get_stage():<25s}'
+        return f'{self.get_clean_date():<15s}{self.get_job():<20s}{str(self.get_company()):<15s}{self.get_stage():<25s}'
 
     def get_job(self):
         return self._job
@@ -47,7 +46,7 @@ class Application(Date):
         self._job = job
 
     def get_company(self):
-        return self._company
+        return self._obj_company
 
     def set_stage(self, stage):
         if stage in self._stages:

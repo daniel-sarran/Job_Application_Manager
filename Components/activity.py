@@ -15,7 +15,7 @@ class Activity(Date):
             1: 'Email',
             2: 'Meeting'
         }
-        self._type = self._interaction_types[interaction_type]
+        self._interaction_type = self._interaction_types[interaction_type]
         self._notes = notes
         self._statuses = {
             0: 'Scheduled',
@@ -24,7 +24,7 @@ class Activity(Date):
         self._status = self._statuses[status]
 
     def __repr__(self):
-        return f'<Communication object: "{self._type} on {self._date.strftime("%x")} -- {self._notes}>"'
+        return f'<Communication object: "{self._interaction_type} on {self._date.strftime("%x")} -- {self._notes}>"'
 
     def __str__(self):
         note = self.get_notes()
@@ -38,10 +38,10 @@ class Activity(Date):
 
     def set_interaction_type(self, interaction):
         """Sets interaction to 'Call', 'Email', or 'Meeting'."""
-        self._type = interaction
+        self._interaction_type = interaction
 
     def get_interaction_type(self):
-        return self._type
+        return self._interaction_type
 
     def set_notes(self, notes):
         """Set notes from communication."""

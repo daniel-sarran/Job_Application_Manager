@@ -4,7 +4,7 @@
 from sortedcontainers import SortedList
 
 # for debugging only:
-from DataStorage.data_storage import Data
+# from DataStorage.data_storage import Data
 
 
 class Company:
@@ -49,9 +49,12 @@ class Company:
     def get_applications(self):
         return self._applications
 
+    def add_application(self, application: object):
+        self._applications.add(application)
 
-if __name__ == '__main__':
-    data = Data()
-    company = 'SalesForce'
-    data.add_co(Company(company, 'Really sweet CRMs, ticker CRM'))
-    data.display_companies()
+
+# if __name__ == '__main__':
+#     data = Data()
+#     company = 'SalesForce'
+#     data.add_co(Company(company, 'Really sweet CRMs, ticker CRM'))
+#     data.display_companies()
