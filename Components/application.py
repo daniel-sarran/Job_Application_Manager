@@ -45,6 +45,12 @@ class Application(Date):
     def set_job(self, job):
         self._job = job
 
+    def get_job_description(self):
+        return self._job_description
+
+    def set_job_description(self, description):
+        self._job_description = description
+
     def get_company(self):
         return self._obj_company
 

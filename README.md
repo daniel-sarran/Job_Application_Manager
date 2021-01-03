@@ -20,7 +20,7 @@ pip install foobar
 ## Usage
 
 ```python
-import foobar
+import jobjobjob
 
 foobar.pluralize('word') # returns 'words'
 foobar.pluralize('goose') # returns 'geese'
