@@ -133,15 +133,15 @@ class Menu:
 
         while True:
             choice = _take_input()
+            index = int(choice) - 1
             if choice == 'e':
                 self.edit_company_details(company)
                 break
-            elif choice in list(map(str, range(0, len(company_apps)))):
-                index = int(choice) - 1
+            elif choice in list(map(str, range(1, len(company_apps) + 1))):
                 self.view_application(company_apps[index])
                 break
             elif choice == 'n':
-                self.build_application()
+                self.build_application(company)
                 break
             elif choice == 'h':
                 self.main_menu()
@@ -149,7 +149,45 @@ class Menu:
             else:
                 print('Invalid selection, try again.')
 
-    def quick_reject_menu(self, company: Company):
+    # TODO: incomplete
+    def view_application_menu(self, application):
+        edit = '[E] Edit details'
+        view_act = '[#] Select activity'
+        new_act = '[N] New activity'
+        home = '[H] Home'
+
+        app_activities = application.get_activities()
+        self._pad('Menu:')
+        print()
+        if len(app_activities) < 1:
+            self._two_pad(f'{new_act}')
+        else:
+            self._two_pad(f'{new_act}{self.two_padding}{view_act}{self.two_padding}{edit}')
+            self._two_pad(f'{home}')
+
+        while True:
+            choice = _take_input()
+            index = int(choice) - 1
+            if choice == 'e':
+                self.edit_application_details(application)
+                break
+            elif choice in list(map(str, range(1, len(app_activities) + 1))):
+                self.view_activity(app_activities[index])
+                break
+            elif choice == 'n':
+                self.build_activity(application)
+                break
+            elif choice == 'h':
+                self.main_menu()
+                break
+            else:
+                print('Invalid selection, try again.')
+
+    # TODO: incomplete
+    def view_activity_menu(self, activity):
+        pass
+
+    def quick_reject_co_menu(self, company: Company):
         select_app = '(#) Select application'
         home = '[H] Home'
         self._pad('Menu:')
@@ -164,9 +202,7 @@ class Menu:
             choice = _take_input()
             if choice in list(map(str, range(0, len(company_apps) + 1))):
                 index = int(choice) - 1
-                company_apps[index].set_stage(4)
-                self.reject_confirmation(company_apps[index])
-                self.main_menu()
+                self.view_application(company_apps[index], 'quick reject')
                 break
             elif choice == 'h':
                 self.main_menu()
@@ -175,9 +211,31 @@ class Menu:
                 print('Invalid selection, try again.')
         pass
 
-    # TODO: incomplete
-    def quick_advance_menu(self, company: Company):
-        pass
+    # TODO: what happens if you advance a rejected app? offer app?
+    def quick_advance_co_menu(self, company: Company):
+        select_app = '(#) Select application'
+        home = '[H] Home'
+        self._pad('Menu:')
+        if len(company.get_applications()) < 1:
+            self._two_pad(f'No applications on file for {company} (press any key to continue).')
+            _take_input()
+            self.main_menu()
+        else:
+            self._two_pad(f'{select_app}{self.two_padding}{home}')
+        company_apps = company.get_applications()
+        while True:
+            choice = _take_input()
+            if choice in list(map(str, range(0, len(company_apps) + 1))):
+                index = int(choice) - 1
+                company_apps[index].advance_stage()
+                self.advance_confirmation(company_apps[index])
+                self.main_menu()
+                break
+            elif choice == 'h':
+                self.main_menu()
+                break
+            else:
+                print('Invalid selection, try again.')
 
     # TODO: incomplete
     def edit_company_details_menu(self, company: Company):
@@ -209,30 +267,40 @@ class Menu:
         if fork == 'view':
             self.view_company_menu(company)
         elif fork == 'quick reject':
-            self.quick_reject_menu(company)
+            self.quick_reject_co_menu(company)
         elif fork == 'quick advance':
-            self.quick_advance_menu(company)
+            self.quick_advance_co_menu(company)
 
+    # TODO: application shows all activities
     def view_application(self, application: Application, fork='view'):
         self._print_border()
         print()
-        self._pad('Application Details:')
+        self._pad('>> Application Details <<')
         print()
         self._two_pad(f'Company:         {application.get_company().get_name()}')
         self._two_pad(f'Position:        {application.get_job()}')
-        self._two_pad(f'Applied on:      {application.get_clean_date()}')
         self._two_pad(f'Description:     {application.get_job_description()}')
-        print()
-        self._print_border()
+        self._two_pad(f'Applied on:      {application.get_clean_date()}')
+
+        if len(application.get_activities()) > 0:
+            print()
+            self._three_pad('Communication history:')
+            self._three_pad(f'#  {"DATE":<15s}{"STATUS":<13s}{"TYPE":<10s}{"NOTE":<40s}')
+            for idx, act in enumerate(list(reversed(application.get_activities()[:5])), start=1):
+                self._three_pad(f'{idx}  {act}')
+
         if fork == 'view':
-            pass
+            self.view_application_menu(application)
         elif fork == 'quick reject':
-            pass
+            self.quick_reject_app_menu(application)
         else:  # fork == 'quick advance'
-            pass
+            self.quick_advance_app_menu(application)
 
     # TODO: incomplete
     def view_activity(self, activity: Activity):
+        pass
+
+    def view_help(self):
         pass
 
     # TODO: incomplete
@@ -244,7 +312,7 @@ class Menu:
         pass
 
     # TODO: incomplete
-    def build_activity_(self, application: Application):
+    def build_activity(self, application: Application):
         pass
 
     def new_company(self):
@@ -261,7 +329,7 @@ class Menu:
         else:  # company is not on file
             self.build_company(company_name)
 
-    def search_not_found(self, company_name):
+    def search_not_found(self, company_name, fork='view'):
         print()
         self._two_pad(f'"{company_name}" not found.')
         print()
@@ -273,7 +341,7 @@ class Menu:
         while True:
             choice = _take_input()
             if choice == 'n':
-                self.search_company()
+                self.search_company(fork)
                 break
             elif choice == 'm':
                 self.main_menu()
@@ -292,7 +360,7 @@ class Menu:
         company_name = self._prompt_company_name()
         found = self.data.find_company(company_name)
         if not found:  # company is already on file
-            self.search_not_found(company_name)
+            self.search_not_found(company_name, fork)
         elif found and fork == 'quick reject':
             self.view_company(found, 'quick reject')
         else:
@@ -411,6 +479,12 @@ class Menu:
         self._two_pad('Press any key to continue.')
         _take_input()
 
+    def quick_reject_app_menu(self, application):
+        pass
+
+    def quick_advance_app_menu(self, application):
+        pass
+
 
 if __name__ == '__main__':
     data1 = Data()
@@ -419,46 +493,46 @@ if __name__ == '__main__':
     company2 = Company('Facebook')
     company3 = Company('Google')
 
-    data1.add_co(company1)
-    data1.add_co(company2)
-    data1.add_co(company3)
+    data1.add_company(company1)
+    data1.add_company(company2)
+    data1.add_company(company3)
 
     application1 = Application((2020, 12, 1), company1, 'SWE Intern')
-    data1.add_app(application1)
+    data1.add_application(application1)
     company1.add_application(application1)
 
     application2 = Application((2020, 12, 21), company2, 'Embedded Intern')
-    data1.add_app(application2)
+    data1.add_application(application2)
     application2.set_stage(2)
     company2.add_application(application2)
 
     application3 = Application((2020, 12, 22), company3, 'Web Dev Intern')
-    data1.add_app(application3)
+    data1.add_application(application3)
 
     communication1 = Activity((2021, 1, 1), 0, 0, 'Send thank you letter to Yasmine & Habib')
-    application1.add_act(communication1)
-    data1.add_act(communication1)
+    application1.add_activity(communication1)
+    data1.add_activity(communication1)
 
     communication2 = Activity((2020, 12, 22), 0, 1, 'Rejection')
-    application2.add_act(communication2)
-    data1.add_act(communication2)
+    application2.add_activity(communication2)
+    data1.add_activity(communication2)
 
     communication3 = Activity((2021, 1, 6), 0, 0, 'Follow up w/ Recruiter - said reach out in 2 weeks')
-    application1.add_act(communication3)
-    data1.add_act(communication3)
+    application1.add_activity(communication3)
+    data1.add_activity(communication3)
 
     communication4 = Activity((2020, 12, 26), 1, 1, 'Sent follow up email')
-    application3.add_act(communication4)
-    data1.add_act(communication4)
+    application3.add_activity(communication4)
+    data1.add_activity(communication4)
 
     communication5 = Activity((2020, 12, 26), 1, 1,
                               'Sent another email, can\'t believe they didn\'t get back to me')
-    application3.add_act(communication5)
-    data1.add_act(communication5)
+    application3.add_activity(communication5)
+    data1.add_activity(communication5)
 
     communication6 = Activity((2020, 12, 27), 1, 1, 'Rcvd rejection email')
-    application3.add_act(communication6)
-    data1.add_act(communication6)
+    application3.add_activity(communication6)
+    data1.add_activity(communication6)
 
     # ************************Start dashboard menu
 

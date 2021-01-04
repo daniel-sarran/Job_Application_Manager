@@ -27,7 +27,7 @@ class Application(Date):
             3: 'Interview - Scheduled',
             4: 'Rejection',
             5: 'Offer'
-            }
+        }
         self._stage = self._stages[0]
         # TODO: change activities to save into DB
         self._activities = SortedList()
@@ -60,15 +60,25 @@ class Application(Date):
         else:
             raise ValueError(f'Stages are: {self._stages}')
 
+    def advance_stage(self):
+        if self._stage in [0, 1, 2]:
+            self._stage += 1
+        elif self._stage == 3:
+            self._stage = 5
+        else:
+            return
+
     def get_stage(self):
         return self._stage
 
-    def add_act(self, comm):
+    def add_activity(self, comm):
         self._activities.add(comm)
 
-    def remove_act(self, comm):
-        self._activities.pop(comm)
-        Application.count -= 1
+    def remove_activity(self, comm):
+        self._activities.remove(comm)
+
+    def get_activities(self):
+        return self._activities
 
 
 def display_total_applications():
@@ -85,8 +95,8 @@ if __name__ == '__main__':
     print(app1)
     display_total_applications()
     comm1 = Activity((2020, 12, 20), 'Email', 'Invited to Online Assessment', 'Done')
-    app1.add_act(comm1)
+    app1.add_activity(comm1)
     comm2 = Activity((2020, 12, 25), 'Meeting', 'Passed OA, awaiting interview per recruiter', 'Done')
-    app1.add_act(comm2)
+    app1.add_activity(comm2)
     print(app1)
     app1.set_stage(0)

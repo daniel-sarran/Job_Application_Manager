@@ -26,10 +26,10 @@ class Data:
     def __str__(self):
         return f''
 
-    def add_co(self, obj_company):
+    def add_company(self, obj_company):
         self._companies.setdefault(obj_company.get_name().title(), obj_company)
 
-    def remove_co(self, co_obj):
+    def remove_company(self, co_obj):
         # TODO: Need to remove associated applications, and their communications as well
         self._companies.pop(co_obj)
 
@@ -41,19 +41,19 @@ class Data:
     def get_companies(self):
         return self._companies
 
-    def add_app(self, app_obj):
+    def add_application(self, app_obj):
         self._applications.add([app_obj.get_date(), app_obj])
 
-    def remove_app(self, obj_application):
+    def remove_applications(self, obj_application):
         self._applications.remove([obj_application.get_date(), obj_application])
 
     def get_applications(self):
         return self._applications
 
-    def add_act(self, obj_activity):
+    def add_activity(self, obj_activity):
         self._activities.add([obj_activity.get_date(), obj_activity])
 
-    def remove_act(self, obj_activity):
+    def remove_activity(self, obj_activity):
         self._activities.remove([obj_activity.get_date(), obj_activity])
 
     def get_activities(self):

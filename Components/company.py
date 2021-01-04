@@ -52,6 +52,10 @@ class Company:
     def add_application(self, application: object):
         self._applications.add(application)
 
+    # TODO: remove application from company, from database, decrement application count
+    def remove_application(self, application: object):
+        pass
+
 
 # if __name__ == '__main__':
 #     data = Data()
