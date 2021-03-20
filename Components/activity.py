@@ -2,6 +2,7 @@
 
 """communication.py: Creates a single communication (email, call, etc)."""
 
+import textwrap
 from Components.date import Date
 
 
@@ -27,9 +28,9 @@ class Activity(Date):
         return f'<Communication object: "{self._interaction_type} on {self._date.strftime("%x")} -- {self._notes}>"'
 
     def __str__(self):
-        note = self.get_notes()
-        if len(self.get_notes()) > 40:
-            note = note[:39] + '...'
+        note = self._notes
+        if len(self._notes) > 40:
+            note = note[:37] + '...'
         return f'{self.get_clean_date():<15s}{self.get_status():<13s}{self.get_interaction_type():<10s}' \
                f'{note:<40s}'
 
@@ -49,7 +50,8 @@ class Activity(Date):
 
     def get_notes(self):
         """Returns notes from communication."""
-        return self._notes
+        note_lines = textwrap.wrap(self._notes)
+        return note_lines
 
     def set_status(self, status):
         """Set status to 'Done', 'In Progress', 'Cancelled' or 'Failed'."""

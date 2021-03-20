@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""data_storage.py: Program data stored here."""
+"""database.py: Program data stored here."""
 from sortedcontainers import SortedDict, SortedList
 
 # These are for debugging if a company successfully gets added and removed

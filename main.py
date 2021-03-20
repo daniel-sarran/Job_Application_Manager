@@ -3,7 +3,7 @@
 """main.py: Main program loop, driver code."""
 
 from UserInteractions.menu import Menu
-from DataStorage.data_storage import Data
+from DataStorage.database import Data
 
 if __name__ == '__main__':
     data1 = Data()

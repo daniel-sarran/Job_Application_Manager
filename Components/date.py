@@ -11,22 +11,22 @@ class Date:
         self._date = datetime.date(yr, mo, day)
 
     def __lt__(self, other):
-        return self._date < other._date
+        return self._date < other.get_date()
 
     def __le__(self, other):
-        return self._date <= other._date
+        return self._date <= other.get_date()
 
     def __gt__(self, other):
-        return self._date > other._date
+        return self._date > other.get_date()
 
     def __ge__(self, other):
-        return self._date >= other._date
+        return self._date >= other.get_date()
 
     def __eq__(self, other):
-        return self._date == other._date
+        return self._date == other.get_date()
 
     def __ne__(self, other):
-        return self._date != other._date
+        return self._date != other.get_date()
 
     def set_date(self, yr_mo_day_tuple):
         self._date = datetime.date(*yr_mo_day_tuple)

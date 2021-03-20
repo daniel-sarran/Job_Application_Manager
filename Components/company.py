@@ -10,10 +10,11 @@ from sortedcontainers import SortedList
 class Company:
     """Creates a Company object representing the company receiving a job application."""
 
-    def __init__(self, name, description=''):
+    def __init__(self, name, sector='', description=''):
         """Initializes a Company object."""
         self._name = name
         self._description = description
+        self._sector = sector
         self._applications = SortedList([])
 
     def __repr__(self):
@@ -30,13 +31,13 @@ class Company:
         """Returns company name"""
         return self._name
 
-    def set_industry(self, industry):
+    def set_sector(self, sector):
         """Sets user industry."""
-        self._description = industry
+        self._sector = sector
 
-    def get_industry(self, industry):
+    def get_sector(self, sector):
         """Returns company industry."""
-        return self._description
+        return self._sector
 
     def set_description(self, description):
         """Change company description."""
